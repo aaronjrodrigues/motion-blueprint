@@ -1,5 +1,5 @@
 blueprint:
-  name: Motion-activated Light (only when sun is up and someone at home)
+  name: Motion-activated Light (only when sun is up)
   description: Turn on a light when motion is detected.
   domain: automation
   source_url: https://github.com/aaronjrodrigues/motion-blueprint
