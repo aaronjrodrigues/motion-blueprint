@@ -1,24 +1,29 @@
 blueprint:
-  name: Motion-activated Light (only when sun is down)
+  name: Motion-activated Light (With condition selector that can be set by user at automation build.)
   description: Turn on a light when motion is detected.
   domain: automation
-  source_url: https://github.com/aaronjrodrigues/motion-blueprint
   input:
     motion_entity:
       name: Motion Sensor
       selector:
         entity:
           filter:
-            - device_class: occupancy
-              domain: binary_sensor
-            - device_class: motion
-              domain: binary_sensor
+            domain: binary_sensor
+            device_class: motion
     light_target:
       name: Light
       selector:
         target:
           entity:
             domain: light
+    additional_conditions:
+      name: Additional conditions
+      description: |
+        Extra conditions you may want to add to this automation 
+        (Example: Home occupied, TV on, etc)
+      default: []
+      selector:
+        condition:
     no_motion_wait:
       name: Wait time
       description: Time to leave the light on after last motion is detected.
@@ -34,7 +39,8 @@ blueprint:
       default: sun.sun
       selector:
         entity:
-          domain: sun
+          filter:
+            domain: sun
 
 # If motion is detected within the delay,
 # we restart the script.
@@ -47,11 +53,11 @@ trigger:
   from: "off"
   to: "on"
 
+  # If you see 'Missing property 'conditions' it is a false error.
+  # See https://github.com/keesschollaart81/vscode-home-assistant/issues/2786
 condition:
-  - condition: numeric_state
-    entity_id: !input sun_entity
-    attribute: elevation
-    below: 0
+  - alias: User pick
+    condition: !input additional_conditions
 
 action:
   - alias: "Turn on the light"
