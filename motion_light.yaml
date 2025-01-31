@@ -32,13 +32,6 @@ blueprint:
       selector:
         entity:
           domain: sun
-    home_entity:
-      name: Home entity
-      description: This is typically "zone.home".
-      default: zone.home
-      selector:
-        entity:
-          domain: zone
 
 # If motion is detected within the delay,
 # we restart the script.
@@ -52,9 +45,6 @@ trigger:
   to: "on"
 
 condition:
-  - condition: numeric_state
-    entity_id: !input home_entity
-    above: 0
   - condition: numeric_state
     entity_id: !input sun_entity
     attribute: elevation
