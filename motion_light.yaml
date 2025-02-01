@@ -1,5 +1,5 @@
 blueprint:
-  name: Motion-activated Light (With condition selector that can be set by user at automation build.)
+  name: Motion-activated Light
   description: Turn on a light when motion is detected.
   domain: automation
   input:
